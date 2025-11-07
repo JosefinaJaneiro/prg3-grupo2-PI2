@@ -57,6 +57,9 @@ export class Post extends Component {
             <Text>Like</Text>
           </Pressable>
         )}
+        <Pressable onPress={() => this.props.navigation.navigate('Comentarios', { postId: this.props.id })}>
+          <Text>Comentar</Text>
+        </Pressable>
       </View>
     )
   }
@@ -65,20 +68,20 @@ export class Post extends Component {
 export default Post
 
 const styles = StyleSheet.create({
-    general: {
-        flex: 1,
-        margin: 15,
-        padding: 10,
-        borderWidth: 1,
-        borderColor: '#ddd',
-        borderRadius: 10
-    },
-    titulo: {
-        fontSize: 20,
-        fontWeight: 'bold',
-        marginBottom: 10,
-   },
-   botonLike: {
+  general: {
+      flex: 1,
+      margin: 15,
+      padding: 10,
+      borderWidth: 1,
+      borderColor: '#ddd',
+      borderRadius: 10
+  },
+  titulo: {
+      fontSize: 20,
+      fontWeight: 'bold',
+      marginBottom: 10,
+  },
+  botonLike: {
     backgroundColor: 'lightgreen',
     padding: 8,
     borderRadius: 6,

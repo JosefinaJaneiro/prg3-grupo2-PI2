@@ -16,7 +16,8 @@ export class NuevoPost extends Component {
             owner: auth.currentUser.email,
             mensaje: mensaje,
             createdAt: Date.now(),
-            likes: []
+            likes: [],
+            comments: []
         })
         .then(() => {
             this.setState({ mensaje: "" })
@@ -28,10 +29,10 @@ export class NuevoPost extends Component {
   render() {
     return (
       <View style={styles.general}>
-        <Text style={styles.titulo}>NuevoPost</Text>
-        <TextInput style={styles.input} keyboardType='default' placeholder='mensaje' onChangeText={ text => this.setState({mensaje:text}) } value={this.state.mensaje}/>
+        <Text style={styles.titulo}>Crear nuevo post</Text>
+        <TextInput style={styles.input} keyboardType='default' placeholder='escribe aqui...' onChangeText={ text => this.setState({mensaje:text}) } value={this.state.mensaje}/>
         <Pressable onPress={() => this.crearPost(this.state.mensaje)} style={styles.boton3}>  
-            <Text style={styles.textoBoton}> Post </Text> 
+            <Text style={styles.textoBoton}> Publicar </Text> 
         </Pressable> 
       </View>
     )

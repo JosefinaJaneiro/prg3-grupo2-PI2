@@ -15,15 +15,16 @@ export class Register extends Component {
     }
 
     onSubmit = () => {
-        if ((this.state.password.length <= 5) && (!this.state.email.includes('@'))) {
-            alert("La contraseña debe tener más de 5 caracteres");
-            console.log("La contraseña debe tener más de 5 caracteres")
-            alert("El email debe contener un '@'");
-            console.log("El email debe contener un '@'")
-        }else {
-            this.register(this.state.email, this.state.password, this.state.userName)
-        } 
-    }
+      if (!this.state.userName) {
+        alert("Completá todos los campos");
+      } else if (this.state.password.length <= 5) {
+        alert("La contraseña debe tener 6 o más caracteres");
+      } else if (!this.state.email.includes('@')) {
+        alert("El email debe contener un '@'");
+      } else {
+        this.register(this.state.email, this.state.password, this.state.userName);
+      }  
+    };
 
     register(email, pass, userName){
       auth.createUserWithEmailAndPassword(email, pass)
@@ -42,32 +43,38 @@ export class Register extends Component {
           });
         })
         .catch(error => {
+          alert(error.message);
           console.log(error);
         });
     }
-    
-/* 
-rnce: componentes con estados
-rnfe: componentes sin estado
-*/
+
+    componentDidMount() {
+      auth.onAuthStateChanged(user => {
+        if (user) {
+          this.props.navigation.navigate('HomeMenu');
+        }
+      });
+    }
 
   render() {
     return (
       <View style={styles.general}>
-        <Text style={styles.titulo}>Register</Text>
-        <Pressable onPress={() => this.props.navigation.navigate('Login')} style={styles.boton1}>
-            <Text>Ir al Login</Text>
-        </Pressable>
-        <Pressable onPress={() => this.props.navigation.navigate('HomeMenu')} style={styles.boton2}>
-            <Text>Ir al HOME</Text>
+        <Text>Email:</Text>
+        <TextInput style={styles.input} keyboardType='email-address' placeholder='email' onChangeText={ text => this.setState({email:text}) } value={this.state.email} />
+        
+        <Text>Nombre de usuario:</Text>
+        <TextInput style={styles.input} keyboardType='default' placeholder='usuario' onChangeText={ text => this.setState({userName:text}) } value={this.state.userName}/>
+
+        <Text>Contraseña:</Text>
+        <TextInput style={styles.input} keyboardType='default' placeholder='password' secureTextEntry={true}  onChangeText={ text => this.setState({password:text}) } value={this.state.password}/> 
+
+        <Pressable onPress={this.onSubmit} style={styles.register}>
+            <Text>Registrarse</Text>
         </Pressable>
 
-        <TextInput style={styles.input} keyboardType='email-address' placeholder='email' onChangeText={ text => this.setState({email:text}) } value={this.state.email} />
-        <TextInput style={styles.input} keyboardType='default' placeholder='password' secureTextEntry={true}  onChangeText={ text => this.setState({password:text}) } value={this.state.password}/> 
-        <TextInput style={styles.input} keyboardType='default' placeholder='userName' onChangeText={ text => this.setState({userName:text}) } value={this.state.userName}/>
-        <Pressable onPress={this.onSubmit} style={styles.boton3}>
-            <Text style={styles.textoBoton}> Register </Text> 
-        </Pressable> 
+        <Pressable onPress={() => this.props.navigation.navigate('Login')} style={styles.login}>
+            <Text>Ya tenes una cuenta? Inicia sesion!</Text>
+        </Pressable>
 
       </View>
     )
@@ -78,37 +85,22 @@ rnfe: componentes sin estado
 export default Register
 
 const styles = StyleSheet.create({
-    general: {
-        flex: 1,
-        margin: 15
-    },
-    titulo: {
-        fontSize: 28,
-        fontWeight: 'bold',
-        marginBottom: 10,
-   },
-   boton1: {
+  general: {
+    flex: 1,
+    margin: 15
+  },
+  login: {
+    alignItems: 'center',
+    textDecorationLine: "underline",
+  },
+  register: {
     paddingVertical: 12,
     borderRadius: 8,
-    alignItems: 'center',
     backgroundColor: "lightblue",
-    marginBottom: 15
-   },
-   boton2: {
-    paddingVertical: 12,
-    borderRadius: 8,
     alignItems: 'center',
-    backgroundColor: "orange",
-    marginBottom: 15
-   },
-   
-   boton3: {
-    paddingVertical: 12,
-    borderRadius: 8,
-    backgroundColor: "grey",
     margin: 20,
-   },
-   input: {
+  },
+  input: {
     height: 20,
     paddingVertical: 15,
     paddingHorizontal: 10,
@@ -117,20 +109,5 @@ const styles = StyleSheet.create({
     borderStyle: 'solid',
     borderRadius: 6,
     marginVertical: 10,
-  },
-  boton: {
-    backgroundColor: '#28a745',
-    paddingHorizontal: 10,
-    paddingVertical: 6,
-    alignItems: 'center',
-    borderRadius: 4,
-    borderWidth: 1,
-    borderStyle: 'solid',
-    borderColor: '#28a745',
-    marginVertical: 5,
-  },
-  textoBoton: {
-    color: '#fff',
-    fontWeight: 'bold',
   },
 }) 
