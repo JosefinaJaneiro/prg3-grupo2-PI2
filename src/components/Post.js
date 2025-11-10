@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import {db, auth} from '../firebase/config'
 import { Pressable } from 'react-native-web'
 import firebase from 'firebase'
+import Ionicons from '@expo/vector-icons/Ionicons';
 
 export class Post extends Component {
   constructor(props){
@@ -50,12 +51,12 @@ export class Post extends Component {
         <Text style={styles.mensajes}>{this.props.data.mensaje}</Text>
         <Text>likes: {this.props.data.likes ? this.props.data.likes.length : 0}</Text>
         {this.state.likeado ? (
-          <Pressable onPress={() => this.quitarLike()} style={styles.botonQuitar}>
-            <Text>Quitar Like</Text>
+          <Pressable onPress={() => this.quitarLike()}>
+            <Ionicons name="heart" size={24} color="red" />
           </Pressable>
         ) : (
-          <Pressable onPress={() => this.likear()} style={styles.botonLike}>
-            <Text>Like</Text>
+          <Pressable onPress={() => this.likear()}>
+            <Ionicons name="heart-outline" size={24} color="black" />
           </Pressable>
         )}
         <Pressable onPress={() => this.props.navigation.navigate('Comentarios', { postId: this.props.id })}>
