@@ -44,9 +44,10 @@ export class Post extends Component {
   render() {
     return (
       <View style={styles.general}>
-        <Text style={styles.titulo}>Post</Text>
-        <Text>usuario: {this.props.data.owner}</Text>
-        <Text>{this.props.data.mensaje}</Text>
+        <Text style={styles.titulo}>{this.props.data.owner}</Text>
+        
+        
+        <Text style={styles.mensajes}>{this.props.data.mensaje}</Text>
         <Text>likes: {this.props.data.likes ? this.props.data.likes.length : 0}</Text>
         {this.state.likeado ? (
           <Pressable onPress={() => this.quitarLike()} style={styles.botonQuitar}>
@@ -58,7 +59,8 @@ export class Post extends Component {
           </Pressable>
         )}
         <Pressable onPress={() => this.props.navigation.navigate('Comentarios', { postId: this.props.id })}>
-          <Text>Comentar</Text>
+          <Text style={styles.comentar}>Comentar</Text>
+          <Text style={styles.fecha}>Creado en: {new Date(this.props.data.createdAt).toLocaleString()}</Text>
         </Pressable>
       </View>
     )
@@ -77,7 +79,7 @@ const styles = StyleSheet.create({
       borderRadius: 10
   },
   titulo: {
-      fontSize: 20,
+      fontSize: 15,
       fontWeight: 'bold',
       marginBottom: 10,
   },
@@ -94,5 +96,17 @@ const styles = StyleSheet.create({
     borderRadius: 6,
     marginTop: 5,
     alignItems: 'center'
+  },
+  comentar:{
+    paddingTop: 7,
+    textDecorationLine: 'underline',
+    fontWeight: 'bold'
+  },
+  mensajes: {
+    fontSize: 17,
+    paddingBottom: 7
+  },
+  fecha:{
+    paddingTop: 10
   }
 })

@@ -34,7 +34,7 @@ export class Home extends Component {
     return (
       <View style={styles.general}>
         <Text style={styles.titulo}>Home</Text>
-        <Text>posteos</Text>
+       
 
         {this.state.loading ? (
           <Text>Cargando...</Text>
@@ -59,5 +59,6 @@ const styles = StyleSheet.create({
         fontSize: 28,
         fontWeight: 'bold',
         marginBottom: 10,
+        textAlign: 'center'
    }
 }) 

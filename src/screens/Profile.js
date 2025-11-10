@@ -54,11 +54,15 @@ export class Profile extends Component {
     render() {
         return (
             <View style={styles.general}>
-                <Text style={styles.titulo}>{this.state.userName}</Text>
-                <Text>{this.state.email}</Text>
-
+                <Text style={styles.titulo}>Mi Perfil</Text>
+                <View style={styles.container}>
+                  <Text style={styles.nombre}>{this.state.userName}</Text>
+                  <Text>{this.state.email}</Text>
+                </View>
                 <Text style={styles.subtitulo}>Últimos posteos:</Text>
 
+                {this.state.posts.length == 0 ? 
+                <Text>No tenes posteos!</Text> :
                 <FlatList data={this.state.posts} keyExtractor={item => item.id} renderItem={({ item }) => (
                     <View style={styles.postContainer}>
                         <Text>{item.data.mensaje}</Text>
@@ -68,10 +72,12 @@ export class Profile extends Component {
                     </View>
                 )}
                 />
+                }
 
                 <Pressable onPress={() => this.logout()} style={styles.botonLogout}>
                 <Text style={styles.textoBoton}>Cerrar sesión</Text>
                 </Pressable>
+                
             </View>
     );
   }    
@@ -88,11 +94,13 @@ const styles = StyleSheet.create({
       fontSize: 28,
       fontWeight: 'bold',
       marginBottom: 10,
+      textAlign: 'center'
     },
     subtitulo: {
       fontSize: 20,
       marginTop: 15,
       marginBottom: 5,
+      paddingTop: 10
     },
     postContainer: {
       padding: 10,
@@ -116,5 +124,17 @@ const styles = StyleSheet.create({
     textoBoton: {
       color: 'white',
       fontWeight: 'bold',
+    },
+    nombre:{
+      fontWeight: 'bold',
+      fontSize: 17,
+      paddingBottom: 4,
+    },
+    container: {
+        backgroundColor: '#ccc',
+        padding: 10,
+        borderRadius: 8,
+        marginBottom: 10,
+    
     },
   });

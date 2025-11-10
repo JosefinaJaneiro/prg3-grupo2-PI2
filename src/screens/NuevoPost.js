@@ -12,6 +12,7 @@ export class NuevoPost extends Component {
     }
 
     crearPost(mensaje){
+      if(this.state.mensaje !== ''){
         db.collection('posts').add({
             owner: auth.currentUser.email,
             mensaje: mensaje,
@@ -23,6 +24,10 @@ export class NuevoPost extends Component {
             this.setState({ mensaje: "" })
         })
         .catch( e => console.log(e))
+      }else{
+        alert("No se puede publicar un posteo vacio.")
+      }
+        
     }
 
 
@@ -30,7 +35,7 @@ export class NuevoPost extends Component {
     return (
       <View style={styles.general}>
         <Text style={styles.titulo}>Crear nuevo post</Text>
-        <TextInput style={styles.input} keyboardType='default' placeholder='escribe aqui...' onChangeText={ text => this.setState({mensaje:text}) } value={this.state.mensaje}/>
+        <TextInput style={styles.input} keyboardType='default' placeholder='Escribe aqui...' onChangeText={ text => this.setState({mensaje:text}) } value={this.state.mensaje}/>
         <Pressable onPress={() => this.crearPost(this.state.mensaje)} style={styles.boton3}>  
             <Text style={styles.textoBoton}> Publicar </Text> 
         </Pressable> 
@@ -55,8 +60,8 @@ const styles = StyleSheet.create({
    boton3: {
     paddingVertical: 12,
     borderRadius: 8,
-    backgroundColor: "grey",
-    margin: 20,
+    backgroundColor: "#ccc",
+    
    },
    input: {
     height: 20,
@@ -67,6 +72,9 @@ const styles = StyleSheet.create({
     borderStyle: 'solid',
     borderRadius: 6,
     marginVertical: 10,
+  },
+  textoBoton: {
+    textAlign: 'center'
   }
 }) 
 

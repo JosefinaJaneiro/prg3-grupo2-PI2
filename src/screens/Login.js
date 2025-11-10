@@ -39,6 +39,7 @@ export class Login extends Component {
     render() {
     return (
       <View style={styles.general}>
+        <Text style={styles.titulo}>Login</Text>
         <Text>Email:</Text>
         <TextInput style={styles.input} keyboardType='email-address' placeholder='email' onChangeText={ text => this.setState({email:text}) } value={this.state.email} />
         <Text>Contraseña:</Text>
@@ -86,4 +87,10 @@ const styles = StyleSheet.create({
     borderRadius: 6,
     marginVertical: 10,
   },
+  titulo:{
+    fontWeight: 'bold',
+    textAlign: 'center',
+    fontSize: 25
+
+  }
 }) 
